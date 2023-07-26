@@ -1,6 +1,7 @@
 package com.service.food.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class Food {
@@ -8,14 +9,11 @@ public class Food {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column
     private String foodName;
-
-    @Column
-    private int foodPrice;
-
-    @Column
+    private Integer foodPrice;
     private String foodType;
+    @ElementCollection
+    private List<String> ingredient;
 
     public long getId() {
         return id;
@@ -33,7 +31,7 @@ public class Food {
         this.foodName = foodName;
     }
 
-    public int getFoodPrice() {
+    public Integer getFoodPrice() {
         return foodPrice;
     }
 
@@ -48,4 +46,15 @@ public class Food {
     public void setFoodType(String foodType) {
         this.foodType = foodType;
     }
+
+    public List<String> getIngredient() {
+        return ingredient;
+    }
+
+    public void setIngredient(List<String> ingredient) {
+        this.ingredient = ingredient;
+    }
+
+//    @OneToMany(mappedBy = "food")
+//    private List<Ingredient> ingredients = new ArrayList<>();
 }
