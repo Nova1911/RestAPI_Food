@@ -41,6 +41,13 @@ public class IngredientService {
     }
 
     public String insertIngredient(Ingredient ingredient) {
+        LocalDate limitDate = LocalDate.now().plusDays(7);
+
+        if(ingredient.getDate().isBefore(LocalDate.now()) || ingredient.getDate().isAfter(limitDate)){
+            logger.error("Unable to add stock outside the specified period.");
+            throw new ServiceValidationException("Unable to add stock outside the specified period.", 422);
+        }
+
         ingredientRepo.save(ingredient);
         logger.info("Inserted ingredient with id " + ingredient.getId());
         return "Inserted ingredient with id " + ingredient.getId();
